@@ -1,5 +1,5 @@
 import streamlit as st
-from SPARQLWrapper import SPARQLWrapper
+from SPARQLWrapper import SPARQLWrapper, JSON
 from streamlit_agraph import agraph, TripleStore, Config
 
 def get_inspired():
