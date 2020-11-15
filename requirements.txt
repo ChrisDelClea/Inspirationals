@@ -1,0 +1,11 @@
+numpy
+pandas
+htbuilder
+streamlit
+streamlit-agraph==0.0.28
+SPARQLWrapper
+networkx
+
+
+# [-e] git+https://github.com/openlegaldata/oldp-sdk-python.git#egg=oldp-api
+# -e https://github.com/openlegaldata/oldp-sdk-python.git#egg=oldp-api
