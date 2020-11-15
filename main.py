@@ -61,7 +61,7 @@ def app():
     st.subheader("Inspirationals")
     with st.spinner("Loading data"):
       store = get_inspired()
-      st.write(len(store.getNodes()))
+      st.write("Nodes loaded: " + str(len(store.getNodes())))
     st.success("Done")
     agraph(list(store.getNodes()), (store.getEdges() ), config)
 
