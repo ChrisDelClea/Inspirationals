@@ -1,6 +1,7 @@
 import streamlit as st
 from SPARQLWrapper import SPARQLWrapper, JSON
 from streamlit_agraph import agraph, TripleStore, Config
+from layout import footer
 
 def get_inspired():
   sparql = SPARQLWrapper("http://dbpedia.org/sparql")
@@ -52,6 +53,7 @@ def get_inspired():
   return store
 
 def app():
+  footer()
   st.title("Graph Example")
   st.sidebar.title("Welcome")
   query_type = st.sidebar.selectbox("Quey Tpye: ", ["Inspirationals"]) # could add more stuff here later on or add other endpoints in the sidebar.
