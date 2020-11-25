@@ -70,6 +70,7 @@ def app():
     agraph(list(store.getNodes()), (store.getEdges() ), config)
 
   if query_type=="Marvel":
+    #based on http://marvel-force-chart.surge.sh/
     with open("./marvel.json", encoding="utf8") as f:
       marvel_file = json.loads(f.read())
       marvel_store = TripleStore()
