@@ -57,7 +57,7 @@ def app():
   footer()
   st.title("Graph Example")
   st.sidebar.title("Welcome")
-  query_type = st.sidebar.selectbox("Query Tpye: ", ["Inspirationals", "Marvel"]) # could add more stuff here later on or add other endpoints in the sidebar.
+  query_type = st.sidebar.selectbox("Query Type: ", ["Inspirationals", "Marvel", "Introspector"]) # could add more stuff here later on or add other endpoints in the sidebar.
   config = Config(height=600, width=700, nodeHighlightBehavior=True, highlightColor="#F7A7A6", directed=True,
                   collapsible=True)
 
@@ -72,6 +72,19 @@ def app():
   if query_type=="Marvel":
     #based on http://marvel-force-chart.surge.sh/
     with open("./marvel.json", encoding="utf8") as f:
+      marvel_file = json.loads(f.read())
+      marvel_store = TripleStore()
+      for sub_graph in marvel_file["children"]:
+        marvel_store.add_triple(marvel_file["name"], "has_subgroup", sub_graph["name"], picture=marvel_file["img"])
+        for node in sub_graph["children"]:
+          node1 = node["hero"]
+          link = "blongs_to"
+          node2 = sub_graph["name"]
+          pic = node["img"]
+          marvel_store.add_triple(node1, link, node2, picture=pic)
+      agraph(list(marvel_store.getNodes()), (marvel_store.getEdges()), config)
+  if query_type=="Introspector":
+    with open("./introspector.json", encoding="utf8") as f:
       marvel_file = json.loads(f.read())
       marvel_store = TripleStore()
       for sub_graph in marvel_file["children"]:

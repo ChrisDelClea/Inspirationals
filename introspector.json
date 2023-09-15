@@ -1,0 +1,42 @@
+{
+    "name": "introspector",
+    "img": "https://raw.githubusercontent.com/meta-introspector/meta-meme/308f1818fc671e2bd6a9ba5054ad3975367c34f5/_45269eb0-90ca-423d-88c2-4549f9ac07ab.jpeg",
+    "children": [
+	{
+	    "name": "Heroes",
+	    "children": [
+		{
+		    "hero": "Athena",
+		    "name": "",
+		    "link": "https://github.com/meta-introspector/meta-meme/wiki/eigenvector-of-Athena",
+		    "img":  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Mattei_Athena_Louvre_Ma530_n2.jpg/300px-Mattei_Athena_Louvre_Ma530_n2.jpg",
+		    "size": 40000
+		}  
+	    ]
+	},
+	{
+	    "name": "Villains",
+	    "children": [
+		{
+		    "hero": "Memory Leak",
+		    "name": "",
+		    "link": "https://owasp.org/www-community/vulnerabilities/Memory_leak#:~:text=A%20memory%20leak%20is%20an,depend%20on%20the%20application%20itself.",
+		    "img":  "https://soshace.com/wp-content/uploads/2019/12/memory-leaks-t.jpg",
+		    "size": 40000
+		}   
+	    ]
+	},
+	{
+	    "name": "Teams",
+	    "children": [
+		{
+		    "hero": "GNU",
+		    "name": "",
+		    "link": "http://gnu.org",
+		    "img":  "https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Heckert_GNU_white.svg/535px-Heckert_GNU_white.svg.png",
+		    "size": 40000
+		}
+	    ]
+	}
+    ]
+}
