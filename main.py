@@ -3,6 +3,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 from streamlit_agraph import agraph, TripleStore, Node, Edge, Config
 from layout import footer
 import json
+import introspector
 
 def get_inspired():
   sparql = SPARQLWrapper("http://dbpedia.org/sparql")
@@ -57,10 +58,12 @@ def app():
   footer()
   st.title("Graph Example")
   st.sidebar.title("Welcome")
-  query_type = st.sidebar.selectbox("Query Type: ", [
-    "Introspector",
-    "Inspirationals", "Marvel", 
-  ]) # could add more stuff here later on or add other endpoints in the sidebar.
+  query_type = st.sidebar.selectbox("Query Type: ",
+                                    [
+                                      "Introspector",
+                                      "Message",
+                                      "Inspirationals", "Marvel", 
+                                    ]) # could add more stuff here later on or add other endpoints in the sidebar.
   config = Config(height=600, width=700, nodeHighlightBehavior=True, highlightColor="#F7A7A6", directed=True,
                   collapsible=True)
 
@@ -68,6 +71,13 @@ def app():
     st.subheader("Inspirationals")
     with st.spinner("Loading data"):
       store = get_inspired()
+      st.write("Nodes loaded: " + str(len(store.getNodes())))
+    st.success("Done")
+    agraph(list(store.getNodes()), (store.getEdges() ), config)
+  if query_type=="Message":
+    st.subheader("Message")
+    with st.spinner("Loading data"):
+      store = introspector.get_input()
       st.write("Nodes loaded: " + str(len(store.getNodes())))
     st.success("Done")
     agraph(list(store.getNodes()), (store.getEdges() ), config)
