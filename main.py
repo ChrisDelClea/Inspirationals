@@ -58,15 +58,19 @@ def app():
   footer()
   st.title("Graph Example")
   st.sidebar.title("Welcome")
-  query_type = st.sidebar.selectbox("Query Type: ",
-                                    [
-                                      "Introspector",
-                                      "Message",
-                                      "Inspirationals", "Marvel", 
-                                    ]) # could add more stuff here later on or add other endpoints in the sidebar.
+
+  store = introspector.get_input()
+
+  nodes = len(list(store.getNodes()))
+  aorder = [    "Introspector",     "Message",   ]
+  if nodes>1:
+    aorder.reverse()
+  aorder.extend(["Inspirationals", "Marvel",])
+  
+  query_type = st.sidebar.selectbox("Query Type: ", aorder,
+                                    ) # could add more stuff here later on or add other endpoints in the sidebar.
   config = Config(height=600, width=700, nodeHighlightBehavior=True, highlightColor="#F7A7A6", directed=True,
                   collapsible=True)
-
   if query_type=="Inspirationals":
     st.subheader("Inspirationals")
     with st.spinner("Loading data"):

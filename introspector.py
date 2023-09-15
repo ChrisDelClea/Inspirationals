@@ -29,7 +29,7 @@ def get_input():
             new1 = urllib.parse.unquote(item)
             if new1.startswith("http"):
                 graph = Graph()
-                graph.parse(new1,format=q.get("format",["xml"])[0])
+                graph.parse(new1,format=q.get("format",["ttl"])[0])
                 for subj, pred, obj in graph:
                     store.add_triple(subj, pred, obj, "")
     return store
