@@ -57,7 +57,10 @@ def app():
   footer()
   st.title("Graph Example")
   st.sidebar.title("Welcome")
-  query_type = st.sidebar.selectbox("Query Type: ", ["Inspirationals", "Marvel", "Introspector"]) # could add more stuff here later on or add other endpoints in the sidebar.
+  query_type = st.sidebar.selectbox("Query Type: ", [
+    "Introspector",
+    "Inspirationals", "Marvel", 
+  ]) # could add more stuff here later on or add other endpoints in the sidebar.
   config = Config(height=600, width=700, nodeHighlightBehavior=True, highlightColor="#F7A7A6", directed=True,
                   collapsible=True)
 
