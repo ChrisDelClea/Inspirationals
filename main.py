@@ -111,7 +111,7 @@ def load_graph_data(filename):
                        shape="circularImage",
                        image=intr_file["img"])
 
-      st.write(m)
+      #st.write(m)
       nodes.append(m    )
       for sub_graph in intr_file["children"]:
         nodes.append(Node(id=sub_graph["name"]))
