@@ -1,17 +1,29 @@
 import streamlit as st
+from rdflib import Graph
 from SPARQLWrapper import SPARQLWrapper, JSON
 from streamlit_agraph import agraph,   Config, Node, TripleStore, Edge
 #from node import Node
 from layout import footer
 import json
 import introspector
-# st.markdown( """
-# <script>alert("hlel");</script>
-# <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-# <script>eruda.init();</script>
-# """,
-#             unsafe_allow_html=True)
-            
+
+
+
+config = Config(
+  # height=200, width=400,
+  
+  #maxZoom=2,
+#minZoom=0.1,
+  #initialZoom=1.5,
+  
+  nodeHighlightBehavior=True,
+  #highlightColor="#F7A7A6",
+  directed=True,
+  collapsible=True)
+
+import streamlit as st
+import streamlit.components.v1 as components
+
 from typing import List, Set
 
 
@@ -92,45 +104,45 @@ from typing import List, Set
 #   def getEdges(self)->Set[Edge]:
 #     return self.edges_set
 
+def load_graph_json(intr_file):
+    nodes = []
+    edges = []
+    intr_store = TripleStore()
+    alink = ""
+    if 'link' in intr_file:
+      alink = f"<a href=\"{intr_file['link']}\">LINKE</a>"
+    m =  Node(id=intr_file["name"],
+              label=intr_file["name"] ,
+              title=alink,
+              shape="circularImage",
+              image=intr_file["img"])    
+    nodes.append(m )
+    for sub_graph in intr_file["children"]:
+      nodes.append(Node(id=sub_graph["name"]))
+      edges.append(Edge(source=sub_graph["name"], target=intr_file["name"], label="subgroup_of"))
+      for node in sub_graph["children"]:
+        nodes.append(
+          Node(id=node["hero"],
+               title=node["link"],
+               shape="circularImage",
+               image=node["img"],
+               group=sub_graph["name"],
+               )
+        )
+        d = Edge(source=node["hero"], target=sub_graph["name"], label="blongs_to")
+        #st.write(d)
+        edges.append(d)
+        # st.dataframe(nodes)    
+    return nodes, edges
+
 
 def load_graph_data(filename):
     nodes = []
     edges = []
     with open(filename, encoding="utf8") as f:
       intr_file = json.loads(f.read())
-      intr_store = TripleStore()
-      #st.write(intr_file)
-      #root
-      #f"<br><a href="{ intr_file['link'] }">{intr_file["name"]}</a> ",
-      alink = f"<a href=\"{intr_file['link']}\">LINKE</a>"
+      return load_graph_json(intr_file)
 
-      m =         Node(id=intr_file["name"],
-                       label=intr_file["name"] ,
-                       title=alink,
-                       #title=intr_file['link'],
-                       shape="circularImage",
-                       image=intr_file["img"])
-
-      #st.write(m)
-      nodes.append(m    )
-      for sub_graph in intr_file["children"]:
-        nodes.append(Node(id=sub_graph["name"]))
-        edges.append(Edge(source=sub_graph["name"], target=intr_file["name"], label="subgroup_of"))
-        for node in sub_graph["children"]:
-          nodes.append(Node(id=node["hero"],
-                            title=node["link"],
-                            shape="circularImage",
-                            image=node["img"],
-                            group=sub_graph["name"],
-                            )
-                       )
-          d = Edge(source=node["hero"], target=sub_graph["name"], label="blongs_to")
-          #st.write(d)
-          edges.append(d)
-          # st.dataframe(nodes)
-
-    
-    return nodes, edges
 
 
 def get_inspired():
@@ -187,6 +199,46 @@ def app():
   #st.title("Graph Example")
   #st.sidebar.title("Welcome")
 
+  code = st.sidebar.text_area("code",key="code")
+  if st.sidebar.button("json"):
+    st.code(code)
+    data = json.loads(code)
+    nodes,edges =     load_graph_json(data)
+    agraph(nodes,edges, config)
+
+  if st.sidebar.button("ttl"):
+    st.code(code)
+    graph = Graph()
+    store = TripleStore()
+    graph.parse(data=code,format="ttl")
+    for subj, pred, obj in graph:
+      store.add_triple(subj, pred, obj, "")
+    ids = {}
+    nodes =[]
+    edges =[]
+    for x in store.getNodes():
+      if x.id not in ids:
+        #st.write("OK",x)
+        ids[x.id] =x
+        nodes.append(x)
+      else:
+        #st.write("OK",x)
+        pass
+        
+      for x in store.getEdges():        
+        dd = x.__dict__
+        ida = "|".join( [
+          dd[k] for k in ["from","to","title"
+                          ]
+        ])
+        if ida not in ids:
+          ids[ida]=1
+          edges.append(x)
+      
+    agraph(list(nodes), (edges ), config)
+  #if st.sidebar.button("python"):
+  #  eval(code)
+
   store = introspector.get_input()
   nodes = len(list(store.getNodes()))
   aorder = [    "Introspector",     "Message",   ]
@@ -196,15 +248,7 @@ def app():
   
   query_type = st.sidebar.selectbox("Query Type: ", aorder,
                                     ) # could add more stuff here later on or add other endpoints in the sidebar.
-  config = Config(
-    # height=200, width=400,
-                  
-                  #maxZoom=2,
-                  #minZoom=0.1,
-                  #initialZoom=1.5,
-
-                  nodeHighlightBehavior=True, highlightColor="#F7A7A6", directed=True,
-                  collapsible=True)
+  
   if query_type=="Inspirationals":
     st.subheader("Inspirationals")
     with st.spinner("Loading data"):
@@ -229,6 +273,8 @@ def app():
     agraph(nodes,edges, config)
 
 
+  
+# st.write("You can find more examples in the [docs]()")
 
 if __name__ == '__main__':
     app()
