@@ -5,6 +5,8 @@
     "children": [
 	{
 	    "name": "Heroes",
+	    "link": "https://github.com/meta-introspector/meta-meme/wiki/Heros",
+	    "img": "https://github.com/meta-introspector/https-streamlit.io-community-llm-hackathon-2023/raw/images/resources/heros.jpg",
 	    "children": [
 		{
 		    "hero": "Athena",
