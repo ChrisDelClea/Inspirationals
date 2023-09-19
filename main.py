@@ -117,8 +117,19 @@ def load_graph_json(intr_file):
               shape="circularImage",
               image=intr_file["img"])    
     nodes.append(m )
+
+    ####
     for sub_graph in intr_file["children"]:
-      nodes.append(Node(id=sub_graph["name"]))
+      alink = ""
+      if 'link' in sub_graph:
+        alink = f"<a href=\"{sub_graph['link']}\">LINKE</a>"
+        m =  Node(id=sub_graph["name"],
+                  label=sub_graph.get("name","") ,
+                  title=alink,
+                  shape=sub_graph.get("shape","circularImage"),
+                  image=sub_graph.get("img",""))   
+        nodes.append(m)
+      
       edges.append(Edge(source=sub_graph["name"], target=intr_file["name"], label="subgroup_of"))
       for node in sub_graph["children"]:
         nodes.append(
@@ -129,7 +140,7 @@ def load_graph_json(intr_file):
                group=sub_graph["name"],
                )
         )
-        d = Edge(source=node["hero"], target=sub_graph["name"], label="blongs_to")
+        d = Edge(source=node["hero"], target=sub_graph["name"], label="a")
         #st.write(d)
         edges.append(d)
         # st.dataframe(nodes)    
