@@ -143,8 +143,33 @@ def load_graph_data(filename):
       intr_file = json.loads(f.read())
       return load_graph_json(intr_file)
 
+def cleanup(store): #clean up the store!
+  ids = {}
+  nodes =[]
+  edges =[]
+  for x in store.getNodes():
+    if x.id not in ids:
+      #st.write("OK",x)
+      ids[x.id] =x
+      nodes.append(x)
+    else:
+      #st.write("OK",x)
+      pass
+        
+  for x in store.getEdges():        
+    dd = x.__dict__
+    ida = "|".join( [
+      dd[k] for k in ["from","to","title"
+                      ]
+    ])
+    if ida not in ids:
+      ids[ida]=1
+      #st.write(ida,x)
+      edges.append(x)
+      
+  agraph(list(nodes), (edges ), config)
 
-
+    
 def get_inspired():
   sparql = SPARQLWrapper("http://dbpedia.org/sparql")
 
@@ -203,8 +228,8 @@ def app():
   if st.sidebar.button("json"):
     st.code(code)
     data = json.loads(code)
-    nodes,edges =     load_graph_json(data)
-    agraph(nodes,edges, config)
+    nodes,edges = load_graph_json(data)
+    agraph(nodes, edges, config)
 
   if st.sidebar.button("ttl"):
     st.code(code)
@@ -213,29 +238,8 @@ def app():
     graph.parse(data=code,format="ttl")
     for subj, pred, obj in graph:
       store.add_triple(subj, pred, obj, "")
-    ids = {}
-    nodes =[]
-    edges =[]
-    for x in store.getNodes():
-      if x.id not in ids:
-        #st.write("OK",x)
-        ids[x.id] =x
-        nodes.append(x)
-      else:
-        #st.write("OK",x)
-        pass
-        
-      for x in store.getEdges():        
-        dd = x.__dict__
-        ida = "|".join( [
-          dd[k] for k in ["from","to","title"
-                          ]
-        ])
-        if ida not in ids:
-          ids[ida]=1
-          edges.append(x)
-      
-    agraph(list(nodes), (edges ), config)
+
+    return cleanup(store)
   #if st.sidebar.button("python"):
   #  eval(code)
 
@@ -262,7 +266,8 @@ def app():
       store = introspector.get_input()
       st.write("Nodes loaded: " + str(len(store.getNodes())))
     st.success("Done")
-    agraph(list(store.getNodes()), (store.getEdges() ), config)
+    return cleanup(store)
+
 
   if query_type=="Marvel":
     #based on http://marvel-force-chart.surge.sh/
@@ -271,7 +276,7 @@ def app():
   if query_type=="Introspector":
     nodes,edges = load_graph_data("./introspector.json")
     agraph(nodes,edges, config)
-
+    #return cleanup(store)
 
   
 # st.write("You can find more examples in the [docs]()")

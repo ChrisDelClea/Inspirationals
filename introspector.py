@@ -27,11 +27,15 @@ def get_input():
     if "messages" in q:
         for item in q["messages"]:
             new1 = urllib.parse.unquote(item)
+            graph = Graph()
             if new1.startswith("http"):
-                graph = Graph()
                 graph.parse(new1,format=q.get("format",["ttl"])[0])
-                for subj, pred, obj in graph:
-                    store.add_triple(subj, pred, obj, "")
+            else:
+                st.code(new1)
+                graph.parse(data=new1,format=q.get("format",["ttl"])[0])
+                
+            for subj, pred, obj in graph:
+                store.add_triple(subj, pred, obj, "")
     return store
     
 #agraph(list(store.getNodes()), list(store.getEdges()), config)
