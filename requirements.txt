@@ -5,6 +5,7 @@ streamlit
 #streamlit-agraph==0.0.28
 SPARQLWrapper
 networkx
+streamlit_code_editor
 git+https://github.com/meta-introspector/streamlit-agraph#egg=streamlit-agraph
 
 # [-e] git+https://github.com/openlegaldata/oldp-sdk-python.git#egg=oldp-api

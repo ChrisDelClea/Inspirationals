@@ -110,7 +110,7 @@ def load_graph_json(intr_file):
     intr_store = TripleStore()
     alink = ""
     if 'link' in intr_file:
-      alink = f"<a href=\"{intr_file['link']}\">LINKE</a>"
+      alink = intr_file['link']
     m =  Node(id=intr_file["name"],
               label=intr_file["name"] ,
               title=alink,
@@ -122,7 +122,7 @@ def load_graph_json(intr_file):
     for sub_graph in intr_file["children"]:
       alink = ""
       if 'link' in sub_graph:
-        alink = f"<a href=\"{sub_graph['link']}\">LINKE</a>"
+        alink = sub_graph['link']
       m =  Node(id=sub_graph["name"],
                 label=sub_graph.get("name","") ,
                 title=alink,
