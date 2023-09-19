@@ -113,7 +113,7 @@ def load_graph_json(intr_file):
       alink = intr_file['link']
     m =  Node(id=intr_file["name"],
               label=intr_file["name"] ,
-              title=alink,
+              title=alink  +" " + intr_file.get("description",""),
               shape="circularImage",
               image=intr_file["img"])    
     nodes.append(m )
@@ -125,7 +125,7 @@ def load_graph_json(intr_file):
         alink = sub_graph['link']
       m =  Node(id=sub_graph["name"],
                 label=sub_graph.get("name","") ,
-                title=alink,
+                title=alink +" " + sub_graph.get("description",""),
                 shape=sub_graph.get("shape","circularImage"),
                 image=sub_graph.get("img",""))   
       nodes.append(m)      
@@ -133,9 +133,10 @@ def load_graph_json(intr_file):
                         target=intr_file["name"], label="subgroup_of"))
         
       for node in sub_graph["children"]:
+
         nodes.append(
           Node(id=node["hero"],
-               title=node["link"],
+               title=node["link"] + " " +node.get("description",""),
                shape="circularImage",
                image=node["img"],
                group=sub_graph["name"],
