@@ -104,7 +104,14 @@
 			}
 		    ]
 		},
-		
+		{
+		    "hero": "PlsRun",
+		    "name": "Please RUn",
+		    "link": "https://plsrun.streamlit.app/",
+		    "img": "https://github.com/meta-introspector/https-streamlit.io-community-llm-hackathon-2023/raw/images/resources/plsrun.jpg",
+		    "size": 40000,
+		    "description": "Streamlit app for testing apps."
+		},		
 		{
 		    "hero": "TextSplitExplorer",
 		    "name": "text-split-explorer",
