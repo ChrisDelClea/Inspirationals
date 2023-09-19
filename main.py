@@ -17,7 +17,7 @@ config = Config(
   #initialZoom=1.5,
   
   nodeHighlightBehavior=True,
-  #highlightColor="#F7A7A6",
+  highlightColor="#F7A7A6",
   directed=True,
   collapsible=True)
 
@@ -123,14 +123,15 @@ def load_graph_json(intr_file):
       alink = ""
       if 'link' in sub_graph:
         alink = f"<a href=\"{sub_graph['link']}\">LINKE</a>"
-        m =  Node(id=sub_graph["name"],
-                  label=sub_graph.get("name","") ,
-                  title=alink,
-                  shape=sub_graph.get("shape","circularImage"),
-                  image=sub_graph.get("img",""))   
-        nodes.append(m)
-      
-      edges.append(Edge(source=sub_graph["name"], target=intr_file["name"], label="subgroup_of"))
+      m =  Node(id=sub_graph["name"],
+                label=sub_graph.get("name","") ,
+                title=alink,
+                shape=sub_graph.get("shape","circularImage"),
+                image=sub_graph.get("img",""))   
+      nodes.append(m)      
+      edges.append(Edge(source=sub_graph["name"],
+                        target=intr_file["name"], label="subgroup_of"))
+        
       for node in sub_graph["children"]:
         nodes.append(
           Node(id=node["hero"],
