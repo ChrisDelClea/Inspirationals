@@ -78,10 +78,10 @@
 		{
 		    "hero": "Intospector",
 		    "name": "inspirationals",
-		    "link": "https://introspector.streamlit.app/",
+		    "link": "https://github.com/meta-introspector/Inspirationals/",
 		    "img": "https://github.com/meta-introspector/https-streamlit.io-community-llm-hackathon-2023/raw/images/resources/inspirationals.jpg",
 		    "size": 40000,
-		    "description": "Streamlit app for displaying RDF graphs.",
+		    "description": "(This Current) Streamlit app for displaying RDF graphs.",
 		    "repositories": [
 			{
 			    "name": "GitHub Repository",
