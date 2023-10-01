@@ -70,7 +70,7 @@
 		    "repositories": [
 			{
 			    "name": "GitHub Repository",
-			    "link": "GitHub Link for JWT Auth Tool"
+			    "link": "https://github.com/meta-introspector/https-streamlit.io-community-llm-hackathon-2023/blob/jwt/src/streamlit_jwt.py"
 			}
 		    ]
 		},
@@ -85,7 +85,7 @@
 		    "repositories": [
 			{
 			    "name": "GitHub Repository",
-			    "link": "GitHub Link for Rdg Graph Viewer"
+			    "link": "https://github.com/meta-introspector/"
 			}
 		    ]
 		},
